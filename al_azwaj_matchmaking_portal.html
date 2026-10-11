@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Azwaj Matchmaking | الأزواج</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldDeep: '#0F382C',
+                        emeraldDark: '#0A261E',
+                        goldAccent: '#D4AF37',
+                        goldLight: '#E8C86B',
+                        goldDark: '#AA8825',
+                        creamBg: '#FDFBF7',
+                        cardIvory: '#FFFDF9',
+                        charcoal: '#2D3748',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        arabic: ['Amiri', 'serif'],
+                        urdu: ['Noto Nastaliq Urdu', 'serif'],
+                        heading: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0A261E;
+            color: #2D3748;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gold-border {
+            border: 2px solid #D4AF37;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFE89C 0%, #D4AF37 50%, #9A7B1C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #D4AF37 0%, #C5A059 100%);
+        }
+
+        .gold-gradient-bg:hover {
+            background: linear-gradient(135deg, #E8C86B 0%, #D4AF37 100%);
+        }
+
+        .islamic-pattern-bg {
+            background-color: #0F382C;
+            background-image: radial-gradient(#D4AF37 0.75px, transparent 0.75px), radial-gradient(#D4AF37 0.75px, #0F382C 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            background-opacity: 0.05;
+        }
+
+        .ornate-card {
+            background: #FDFBF7;
+            border: 1px solid #E2D7B5;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .ornate-card:hover {
+            transform: translateY(-4px);
+            border-color: #D4AF37;
+            box-shadow: 0 20px 30px -10px rgba(212, 175, 55, 0.25);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A261E;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E8C86B;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-goldAccent selection:text-emeraldDark">
+
+    <header class="sticky top-0 z-40 bg-emeraldDark/95 backdrop-blur-md border-b border-goldAccent/30 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('browse')">
+                    <div class="w-12 h-12 rounded-full border-2 border-goldAccent flex items-center justify-center bg-emeraldDeep shadow-inner">
+                        <span class="font-arabic text-2xl text-goldAccent font-bold">ز</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-heading text-xl md:text-2xl font-bold tracking-wider gold-gradient-text">AL-AZWAJ</span>
+                            <span class="font-arabic text-xl text-goldAccent">الأزواج</span>
+                        </div>
+                        <p class="text-xs text-goldLight/80 tracking-widest uppercase font-medium">Matchmaking Service</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <button onclick="switchTab('browse')" id="nav-browse" class="text-goldAccent hover:text-goldLight transition-colors py-2 border-b-2 border-goldAccent font-semibold">
+                        <i class="fa-solid fa-users-viewfinder mr-2"></i>Browse Profiles
+                    </button>
+                    <button onclick="switchTab('pillars')" id="nav-pillars" class="text-gray-300 hover:text-goldAccent transition-colors py-2 border-b-2 border-transparent">
+                        <i class="fa-solid fa-shield-halved mr-2"></i>Our Core Pillars
+                    </button>
+                    <button onclick="switchTab('roadmap')" id="nav-roadmap" class="text-gray-300 hover:text-goldAccent transition-colors py-2 border-b-2 border-transparent">
+                        <i class="fa-solid fa-compass mr-2"></i>Future Portal
+                    </button>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-3">
+                    <a href="https://tinyurl.com/alazwaj" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full font-semibold text-xs uppercase tracking-wider text-emeraldDark gold-gradient-bg shadow-md hover:shadow-goldAccent/20 transition-all transform hover:scale-105">
+                        <i class="fa-solid fa-file-pen mr-2"></i>Submit Profile
+                    </a>
+                    <button onclick="openModal('loginModal')" class="inline-flex items-center justify-center px-4 py-2 rounded-full font-semibold text-xs uppercase tracking-wider text-goldAccent border border-goldAccent/60 hover:bg-goldAccent/10 transition-all">
+                        <i class="fa-solid fa-user-lock mr-2"></i>Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative bg-emeraldDeep text-white py-12 lg:py-16 border-b border-goldAccent/30 overflow-hidden islamic-pattern-bg">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                
+                <!-- Hadith Header Banner -->
+                <div class="inline-block p-1 rounded-2xl bg-gradient-to-r from-goldAccent/20 via-goldAccent/40 to-goldAccent/20 mb-6">
+                    <div class="bg-emeraldDark/90 backdrop-blur-md px-6 py-4 rounded-xl border border-goldAccent/40">
+                        <!-- Arabic Hadith -->
+                        <div class="font-arabic text-2xl md:text-4xl text-goldAccent font-bold mb-2 tracking-wide leading-relaxed">
+                            « خَيْرُ النِّكَاحِ أَيْسَرُهُ »
+                        </div>
+                        <!-- Urdu Translation -->
+                        <div class="font-urdu text-lg md:text-2xl text-amber-100/90 mb-2 leading-loose">
+                            بہترین شادی وہ ہے جو سب سے آسان ہو۔
+                        </div>
+                        <div class="text-xs md:text-sm text-goldLight/70 font-sans italic">
+                            (سنن ابوداؤد 2117) &bull; Sunan Abi Dawud 2117
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Tagline -->
+                <h1 class="font-heading text-3xl md:text-5xl font-extrabold tracking-wide text-white mb-4">
+                    Connecting Families with <span class="gold-gradient-text">Faith, Modesty & Honor</span>
+                </h1>
+                <p class="text-base md:text-lg text-emerald-100/80 max-w-2xl mx-auto mb-8 font-light italic">
+                    "Guided by Sharia, Cultivated by Community."
+                </p>
+
+                <!-- Hero Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://tinyurl.com/alazwaj" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm tracking-wider uppercase text-emeraldDark gold-gradient-bg shadow-lg hover:shadow-goldAccent/30 transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-paper-plane mr-2"></i>Register Profile (Google Form)
+                    </a>
+                    <button onclick="switchTab('browse')" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-sm tracking-wider uppercase text-white border-2 border-goldAccent hover:bg-goldAccent/10 transition-all">
+                        <i class="fa-solid fa-magnifying-glass mr-2"></i>Browse Verified Profiles
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            
+            <!-- TAB 1: BROWSE PROFILES -->
+            <div id="tab-browse" class="tab-content block">
+                <!-- Search & Filters Bar -->
+                <div class="bg-emeraldDeep border border-goldAccent/40 rounded-2xl p-6 mb-10 shadow-xl">
+                    <div class="flex items-center justify-between mb-4 border-b border-goldAccent/20 pb-3">
+                        <h2 class="font-heading text-lg font-bold text-goldAccent flex items-center">
+                            <i class="fa-solid fa-filter mr-2"></i>Search & Filter Candidate Profiles
+                        </h2>
+                        <button onclick="resetFilters()" class="text-xs text-goldLight hover:underline flex items-center">
+                            <i class="fa-solid fa-rotate-left mr-1"></i>Reset Filters
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <!-- Gender Filter -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-emerald-200 mb-1">Looking For</label>
+                            <select id="filterGender" onchange="applyFilters()" class="w-full bg-emeraldDark text-white border border-goldAccent/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent">
+                                <option value="all">All Candidates</option>
+                                <option value="Male">Bridegroom (Male)</option>
+                                <option value="Female">Bride (Female)</option>
+                            </select>
+                        </div>
+
+                        <!-- Location Filter -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-emerald-200 mb-1">City / Location</label>
+                            <select id="filterCity" onchange="applyFilters()" class="w-full bg-emeraldDark text-white border border-goldAccent/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent">
+                                <option value="all">All Cities</option>
+                                <option value="Multan">Multan</option>
+                                <option value="Bahawalpur">Bahawalpur</option>
+                                <option value="Lahore">Lahore</option>
+                                <option value="Islamabad">Islamabad</option>
+                                <option value="Karachi">Karachi</option>
+                            </select>
+                        </div>
+
+                        <!-- Education Filter -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-emerald-200 mb-1">Qualification</label>
+                            <select id="filterEducation" onchange="applyFilters()" class="w-full bg-emeraldDark text-white border border-goldAccent/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent">
+                                <option value="all">All Qualifications</option>
+                                <option value="Engineering">Engineering / Tech</option>
+                                <option value="Medical">Medical / Healthcare</option>
+                                <option value="Masters">Masters / Ph.D.</option>
+                                <option value="Business">Business / Finance</option>
+                            </select>
+                        </div>
+
+                        <!-- Marital Status -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-emerald-200 mb-1">Marital Status</label>
+                            <select id="filterStatus" onchange="applyFilters()" class="w-full bg-emeraldDark text-white border border-goldAccent/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent">
+                                <option value="all">Any Status</option>
+                                <option value="Single">Single / Never Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Widowed">Widowed</option>
+                            </select>
+                        </div>
+
+                        <!-- Search Text -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-emerald-200 mb-1">Keyword Search</label>
+                            <input type="text" id="filterKeyword" onkeyup="applyFilters()" placeholder="e.g. Engineer, Doctor..." class="w-full bg-emeraldDark text-white border border-goldAccent/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent placeholder-emerald-400/50">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Counter -->
+                <div class="flex items-center justify-between mb-6 px-2">
+                    <p class="text-sm text-amber-100/80">
+                        Showing <span id="candidateCount" class="font-bold text-goldAccent">0</span> verified family profiles
+                    </p>
+                    <span class="inline-flex items-center text-xs text-goldLight bg-emeraldDeep/80 px-3 py-1 rounded-full border border-goldAccent/30">
+                        <i class="fa-solid fa-user-check text-green-400 mr-1.5"></i> All Profiles Vetted by Al-Azwaj
+                    </span>
+                </div>
+
+                <!-- Profile Grid -->
+                <div id="profileGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic Profiles Will Be Injected Here via JS -->
+                </div>
+            </div>
+
+            <!-- TAB 2: OUR CORE PILLARS -->
+            <div id="tab-pillars" class="tab-content hidden">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="font-heading text-3xl font-bold text-goldAccent mb-3">Our Core Pillars</h2>
+                    <p class="text-emerald-100/80 text-sm md:text-base">
+                        Al-Azwaj is built on strict Islamic values, emphasizing ease, honor, and complete clarity for both families throughout the matchmaking process.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- Pillar 1 -->
+                    <div class="ornate-card p-8 rounded-2xl border-t-4 border-t-goldAccent">
+                        <div class="w-14 h-14 rounded-2xl bg-emeraldDeep text-goldAccent flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-magnifying-glass-scale"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-emeraldDark mb-3">1. Maximizing Transparency</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Clear, unambiguous, and honest representation of background details, requirements, and family priorities. No hidden expectations or false claims.
+                        </p>
+                    </div>
+
+                    <!-- Pillar 2 -->
+                    <div class="ornate-card p-8 rounded-2xl border-t-4 border-t-goldAccent">
+                        <div class="w-14 h-14 rounded-2xl bg-emeraldDeep text-goldAccent flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-emeraldDark mb-3">2. Value-Based Profiling</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Prioritizing religious outlook, moral character (Akhlaq), life goals, and personal ethics alongside traditional educational and professional background.
+                        </p>
+                    </div>
+
+                    <!-- Pillar 3 -->
+                    <div class="ornate-card p-8 rounded-2xl border-t-4 border-t-goldAccent">
+                        <div class="w-14 h-14 rounded-2xl bg-emeraldDeep text-goldAccent flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-emeraldDark mb-3">3. Compatibility Assessment</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Evaluating lifestyle, cultural expectations, mindset alignment, and future plans to help ensure long-term harmony between both spouses.
+                        </p>
+                    </div>
+
+                    <!-- Pillar 4 -->
+                    <div class="ornate-card p-8 rounded-2xl border-t-4 border-t-goldAccent">
+                        <div class="w-14 h-14 rounded-2xl bg-emeraldDeep text-goldAccent flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-people-roof"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-emeraldDark mb-3">4. Family-Centric Vetting</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Engaging guardians (Wali) and family members from the very beginning to maintain modesty, dignity, and mutual trust throughout all communications.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: FUTURE PORTAL ROADMAP -->
+            <div id="tab-roadmap" class="tab-content hidden">
+                <div class="bg-gradient-to-br from-emeraldDeep to-emeraldDark border border-goldAccent/40 rounded-3xl p-8 md:p-12 shadow-2xl text-white">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-emeraldDark gold-gradient-bg mb-4 inline-block">
+                            Phase 2 Development
+                        </span>
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-goldAccent mb-4">
+                            Future Member Portal & Account Management
+                        </h2>
+                        <p class="text-emerald-100/80 text-sm md:text-base mb-8 leading-relaxed">
+                            We are currently operating using our streamlined Google Form registration system. Soon, registered families will be able to create secure accounts to manage profiles, track proposals, and communicate directly.
+                        </p>
+
+                        <!-- Feature Timeline -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left mb-10">
+                            <div class="bg-emeraldDark/80 p-5 rounded-xl border border-goldAccent/20">
+                                <div class="text-goldAccent font-bold text-lg mb-2"><i class="fa-solid fa-user-gear mr-2"></i>Self Update</div>
+                                <p class="text-xs text-gray-300">Edit and update your profile details anytime through your personal dashboard.</p>
+                            </div>
+                            <div class="bg-emeraldDark/80 p-5 rounded-xl border border-goldAccent/20">
+                                <div class="text-goldAccent font-bold text-lg mb-2"><i class="fa-solid fa-shield-halved mr-2"></i>Wali Account</div>
+                                <p class="text-xs text-gray-300">Dedicated guardian login mode for family-controlled proposal approvals.</p>
+                            </div>
+                            <div class="bg-emeraldDark/80 p-5 rounded-xl border border-goldAccent/20">
+                                <div class="text-goldAccent font-bold text-lg mb-2"><i class="fa-solid fa-bell mr-2"></i>Matches Alerts</div>
+                                <p class="text-xs text-gray-300">Automated notifications whenever a compatible profile is registered.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button onclick="openModal('loginModal')" class="px-8 py-3 rounded-full font-bold text-xs uppercase tracking-wider text-emeraldDark gold-gradient-bg shadow-lg hover:scale-105 transition-all">
+                                Preview Portal Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- MODAL 1: EXPRESS INTEREST MODAL -->
+    <div id="interestModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-cardIvory border-2 border-goldAccent rounded-2xl max-w-md w-full p-6 text-charcoal shadow-2xl relative">
+            <button onclick="closeModal('interestModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-emeraldDeep text-goldAccent flex items-center justify-center text-xl mx-auto mb-3">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <h3 class="font-heading text-xl font-bold text-emeraldDeep">Express Family Interest</h3>
+                <p class="text-xs text-gray-500 mt-1">Candidate Reference: <span id="modalCandidateId" class="font-bold text-goldDark">#AZ-0000</span></p>
+            </div>
+
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 text-xs text-emerald-900 leading-relaxed">
+                <p class="font-semibold mb-1"><i class="fa-solid fa-circle-info mr-1 text-emerald-700"></i>Sharia & Family Vetting Protocol:</p>
+                To maintain confidentiality and modesty, family contact details are shared only after your own family profile is registered and verified on Al-Azwaj.
+            </div>
+
+            <div class="space-y-3">
+                <a href="https://tinyurl.com/alazwaj" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-wider text-emeraldDark gold-gradient-bg shadow-md hover:scale-[1.02] transition-all">
+                    <i class="fa-solid fa-file-pen mr-2"></i>Complete Registration Form First
+                </a>
+                <button onclick="closeModal('interestModal')" class="w-full py-2.5 rounded-xl border border-gray-300 font-semibold text-xs text-gray-600 hover:bg-gray-100 transition-colors">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: MOCK LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-cardIvory border-2 border-goldAccent rounded-2xl max-w-md w-full p-6 text-charcoal shadow-2xl relative">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-emeraldDeep text-goldAccent flex items-center justify-center text-xl mx-auto mb-3">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h3 class="font-heading text-xl font-bold text-emeraldDeep">Al-Azwaj Member Portal</h3>
+                <p class="text-xs text-gray-500 mt-1">Phase 2 Registration & Login Preview</p>
+            </div>
+
+            <form onsubmit="handleMockLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Registered Phone / Email</label>
+                    <input type="text" required placeholder="e.g. 0300-1234567" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-goldAccent">
+                </div>
+                <div class="flex items-center justify-between text-xs text-gray-500">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="rounded border-gray-300 text-goldAccent focus:ring-goldAccent mr-1.5"> Remember Me
+                    </label>
+                    <a href="#" class="text-goldDark hover:underline">Forgot Password?</a>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider text-emeraldDark gold-gradient-bg shadow-md hover:scale-[1.02] transition-all">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="mt-6 pt-4 border-t border-gray-200 text-center text-xs text-gray-600">
+                Don't have an account yet? <br>
+                <a href="https://tinyurl.com/alazwaj" target="_blank" class="text-goldDark font-bold hover:underline mt-1 inline-block">
+                    Register Profile via Google Form &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-emeraldDark border-t border-goldAccent/30 text-emerald-100/70 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-goldAccent/20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full border border-goldAccent flex items-center justify-center bg-emeraldDeep">
+                        <span class="font-arabic text-xl text-goldAccent">ز</span>
+                    </div>
+                    <div>
+                        <span class="font-heading text-lg font-bold text-goldAccent">AL-AZWAJ</span>
+                        <p class="text-xs text-emerald-200/60">Guided by Sharia, Cultivated by Community.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 text-xs text-emerald-200">
+                    <button onclick="switchTab('browse')" class="hover:text-goldAccent">Browse Profiles</button>
+                    <button onclick="switchTab('pillars')" class="hover:text-goldAccent">Core Pillars</button>
+                    <a href="https://tinyurl.com/alazwaj" target="_blank" class="hover:text-goldAccent">Registration Form</a>
+                    <button onclick="openModal('loginModal')" class="hover:text-goldAccent">Member Portal</button>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-300/50 gap-4">
+                <p>&copy; 2026 Al-Azwaj Matchmaking (الأزواج). All rights reserved.</p>
+                <p class="italic">Strictly confidential, family-centric vetting platform.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mock Verified Profile Dataset
+        const sampleCandidates = [
+            {
+                id: "AZ-1042",
+                gender: "Male",
+                age: 29,
+                profession: "Electronics Engineer",
+                educationGroup: "Engineering",
+                education: "B.Sc. Electrical Engineering",
+                city: "Bahawalpur",
+                sect: "Sunni / Religious Outlook",
+                status: "Single",
+                height: "5' 10\"",
+                familySummary: "Respectable family settled in Bahawalpur. Father retired government officer.",
+                requirements: "Looking for an educated, family-oriented practicing Muslimah."
+            },
+            {
+                id: "AZ-1088",
+                gender: "Female",
+                age: 26,
+                profession: "Medical Doctor (MBBS)",
+                educationGroup: "Medical",
+                education: "MBBS (FCPS Trainee)",
+                city: "Multan",
+                sect: "Sunni / Moderately Religious",
+                status: "Single",
+                height: "5' 4\"",
+                familySummary: "Well-known educated family in Multan. Both parents in education sector.",
+                requirements: "Looking for a well-educated doctor or engineer with good moral values."
+            },
+            {
+                id: "AZ-1102",
+                gender: "Male",
+                age: 32,
+                profession: "Software Architect",
+                educationGroup: "Engineering",
+                education: "M.Sc. Computer Science",
+                city: "Lahore",
+                sect: "Sunni / Practicing",
+                status: "Single",
+                height: "6' 0\"",
+                familySummary: "Business family residing in DHA Lahore.",
+                requirements: "Seeking a soft-spoken, religious bride from a good family background."
+            },
+            {
+                id: "AZ-1145",
+                gender: "Female",
+                age: 28,
+                profession: "Lecturer / Ph.D. Scholar",
+                educationGroup: "Masters",
+                education: "M.Phil in English Literature",
+                city: "Islamabad",
+                sect: "Sunni / Practicing",
+                status: "Single",
+                height: "5' 5\"",
+                familySummary: "Father serving as Senior Civil Servant in Islamabad.",
+                requirements: "Looking for an officer, doctor, or well-settled professional."
+            },
+            {
+                id: "AZ-1190",
+                gender: "Male",
+                age: 34,
+                profession: "Chartered Accountant",
+                educationGroup: "Business",
+                education: "CA / ACCA Member",
+                city: "Karachi",
+                sect: "Sunni / Moderately Religious",
+                status: "Divorced",
+                height: "5' 9\"",
+                familySummary: "Residing in Clifton Karachi. Family involved in textile manufacturing.",
+                requirements: "Looking for a simple, caring life partner who respects family values."
+            },
+            {
+                id: "AZ-1210",
+                gender: "Female",
+                age: 25,
+                profession: "Dentist (BDS)",
+                educationGroup: "Medical",
+                education: "BDS Practitioner",
+                city: "Multan",
+                sect: "Sunni / Practicing",
+                status: "Single",
+                height: "5' 3\"",
+                familySummary: "Industrialist family background in Multan.",
+                requirements: "Preferably a doctor or professional engineer settled in South Punjab or Lahore."
+            }
+        ];
+
+        // Initialize App
+        window.onload = function() {
+            renderProfiles(sampleCandidates);
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('block'));
+
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('block');
+
+            // Reset navigation styles
+            ['browse', 'pillars', 'roadmap'].forEach(t => {
+                const btn = document.getElementById('nav-' + t);
+                if (btn) {
+                    btn.classList.remove('text-goldAccent', 'border-goldAccent', 'font-semibold');
+                    btn.classList.add('text-gray-300', 'border-transparent');
+                }
+            });
+
+            const activeBtn = document.getElementById('nav-' + tabName);
+            if (activeBtn) {
+                activeBtn.classList.add('text-goldAccent', 'border-goldAccent', 'font-semibold');
+                activeBtn.classList.remove('text-gray-300', 'border-transparent');
+            }
+
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        // Render Profile Cards
+        function renderProfiles(data) {
+            const container = document.getElementById('profileGrid');
+            const counter = document.getElementById('candidateCount');
+            counter.innerText = data.length;
+
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center bg-emeraldDeep/50 rounded-2xl border border-goldAccent/20 text-emerald-200">
+                        <i class="fa-solid fa-user-slash text-4xl text-goldAccent/50 mb-3"></i>
+                        <p class="font-semibold">No candidates found matching your filter criteria.</p>
+                        <button onclick="resetFilters()" class="mt-3 text-xs text-goldLight underline">Reset all filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = data.map(item => `
+                <div class="ornate-card rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <!-- Header -->
+                        <div class="flex items-center justify-between pb-3 border-b border-gray-200 mb-4">
+                            <div>
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-md ${item.gender === 'Male' ? 'bg-blue-100 text-blue-800' : 'bg-rose-100 text-rose-800'}">
+                                    ${item.gender} &bull; ${item.age} yrs
+                                </span>
+                                <h3 class="font-heading font-bold text-emeraldDark text-lg mt-1">Ref #${item.id}</h3>
+                            </div>
+                            <span class="text-xs font-semibold text-goldDark bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                                <i class="fa-solid fa-location-dot mr-1"></i>${item.city}
+                            </span>
+                        </div>
+
+                        <!-- Candidate Attributes -->
+                        <div class="space-y-2 text-xs text-gray-700 mb-4">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-user-graduate w-5 text-goldDark"></i>
+                                <span class="font-medium">${item.education}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-briefcase w-5 text-goldDark"></i>
+                                <span>${item.profession}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-ruler-vertical w-5 text-goldDark"></i>
+                                <span>Height: ${item.height}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-ring w-5 text-goldDark"></i>
+                                <span>Status: ${item.status}</span>
+                            </div>
+                        </div>
+
+                        <!-- Brief Background -->
+                        <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-100 text-xs text-gray-600 mb-4">
+                            <p class="font-semibold text-emeraldDark mb-0.5">Family Overview:</p>
+                            <p class="line-clamp-2">${item.familySummary}</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button onclick="expressInterest('${item.id}')" class="w-full py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-emeraldDark gold-gradient-bg shadow-sm hover:shadow-md transition-all flex items-center justify-center">
+                        <i class="fa-solid fa-heart mr-1.5"></i> Express Family Interest
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Filtering Engine
+        function applyFilters() {
+            const gender = document.getElementById('filterGender').value;
+            const city = document.getElementById('filterCity').value;
+            const edu = document.getElementById('filterEducation').value;
+            const status = document.getElementById('filterStatus').value;
+            const keyword = document.getElementById('filterKeyword').value.toLowerCase();
+
+            const filtered = sampleCandidates.filter(item => {
+                const matchGender = (gender === 'all' || item.gender === gender);
+                const matchCity = (city === 'all' || item.city === city);
+                const matchEdu = (edu === 'all' || item.educationGroup === edu);
+                const matchStatus = (status === 'all' || item.status === status);
+                const matchKeyword = (keyword === '' || 
+                    item.profession.toLowerCase().includes(keyword) || 
+                    item.education.toLowerCase().includes(keyword) ||
+                    item.id.toLowerCase().includes(keyword));
+
+                return matchGender && matchCity && matchEdu && matchStatus && matchKeyword;
+            });
+
+            renderProfiles(filtered);
+        }
+
+        function resetFilters() {
+            document.getElementById('filterGender').value = 'all';
+            document.getElementById('filterCity').value = 'all';
+            document.getElementById('filterEducation').value = 'all';
+            document.getElementById('filterStatus').value = 'all';
+            document.getElementById('filterKeyword').value = '';
+            renderProfiles(sampleCandidates);
+        }
+
+        // Modal Controls
+        function expressInterest(candidateId) {
+            document.getElementById('modalCandidateId').innerText = '#' + candidateId;
+            openModal('interestModal');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function handleMockLogin(event) {
+            event.preventDefault();
+            alert("Note: Account login will be activated in Phase 2. Please use the Google Form to submit your profile details.");
+            closeModal('loginModal');
+        }
+    </script>
+</body>
+</html>
