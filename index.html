@@ -472,93 +472,10 @@
     </footer>
 
     <script>
-        // Mock Verified Profile Dataset
-        const sampleCandidates = [
-            {
-                id: "AZ-1042",
-                gender: "Male",
-                age: 29,
-                profession: "Electronics Engineer",
-                educationGroup: "Engineering",
-                education: "B.Sc. Electrical Engineering",
-                city: "Bahawalpur",
-                sect: "Sunni / Religious Outlook",
-                status: "Single",
-                height: "5' 10\"",
-                familySummary: "Respectable family settled in Bahawalpur. Father retired government officer.",
-                requirements: "Looking for an educated, family-oriented practicing Muslimah."
-            },
-            {
-                id: "AZ-1088",
-                gender: "Female",
-                age: 26,
-                profession: "Medical Doctor (MBBS)",
-                educationGroup: "Medical",
-                education: "MBBS (FCPS Trainee)",
-                city: "Multan",
-                sect: "Sunni / Moderately Religious",
-                status: "Single",
-                height: "5' 4\"",
-                familySummary: "Well-known educated family in Multan. Both parents in education sector.",
-                requirements: "Looking for a well-educated doctor or engineer with good moral values."
-            },
-            {
-                id: "AZ-1102",
-                gender: "Male",
-                age: 32,
-                profession: "Software Architect",
-                educationGroup: "Engineering",
-                education: "M.Sc. Computer Science",
-                city: "Lahore",
-                sect: "Sunni / Practicing",
-                status: "Single",
-                height: "6' 0\"",
-                familySummary: "Business family residing in DHA Lahore.",
-                requirements: "Seeking a soft-spoken, religious bride from a good family background."
-            },
-            {
-                id: "AZ-1145",
-                gender: "Female",
-                age: 28,
-                profession: "Lecturer / Ph.D. Scholar",
-                educationGroup: "Masters",
-                education: "M.Phil in English Literature",
-                city: "Islamabad",
-                sect: "Sunni / Practicing",
-                status: "Single",
-                height: "5' 5\"",
-                familySummary: "Father serving as Senior Civil Servant in Islamabad.",
-                requirements: "Looking for an officer, doctor, or well-settled professional."
-            },
-            {
-                id: "AZ-1190",
-                gender: "Male",
-                age: 34,
-                profession: "Chartered Accountant",
-                educationGroup: "Business",
-                education: "CA / ACCA Member",
-                city: "Karachi",
-                sect: "Sunni / Moderately Religious",
-                status: "Divorced",
-                height: "5' 9\"",
-                familySummary: "Residing in Clifton Karachi. Family involved in textile manufacturing.",
-                requirements: "Looking for a simple, caring life partner who respects family values."
-            },
-            {
-                id: "AZ-1210",
-                gender: "Female",
-                age: 25,
-                profession: "Dentist (BDS)",
-                educationGroup: "Medical",
-                education: "BDS Practitioner",
-                city: "Multan",
-                sect: "Sunni / Practicing",
-                status: "Single",
-                height: "5' 3\"",
-                familySummary: "Industrialist family background in Multan.",
-                requirements: "Preferably a doctor or professional engineer settled in South Punjab or Lahore."
-            }
-        ];
+        // CONFIG: Set to true once you start adding real profiles
+        const HAS_PROFILES = false; 
+
+        const sampleCandidates = [];
 
         // Initialize App
         window.onload = function() {
@@ -597,12 +514,19 @@
             const counter = document.getElementById('candidateCount');
             counter.innerText = data.length;
 
-            if (data.length === 0) {
+            if (!HAS_PROFILES || data.length === 0) {
                 container.innerHTML = `
-                    <div class="col-span-full py-12 text-center bg-emeraldDeep/50 rounded-2xl border border-goldAccent/20 text-emerald-200">
-                        <i class="fa-solid fa-user-slash text-4xl text-goldAccent/50 mb-3"></i>
-                        <p class="font-semibold">No candidates found matching your filter criteria.</p>
-                        <button onclick="resetFilters()" class="mt-3 text-xs text-goldLight underline">Reset all filters</button>
+                    <div class="col-span-full py-16 text-center bg-emeraldDeep/60 rounded-2xl border border-goldAccent/30 text-emerald-100 p-8 shadow-xl">
+                        <div class="w-16 h-16 rounded-full bg-emeraldDark border border-goldAccent flex items-center justify-center text-2xl text-goldAccent mx-auto mb-4 shadow-inner">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-goldAccent mb-2">Registration Open &bull; Profiles Processing</h3>
+                        <p class="text-sm text-emerald-100/80 max-w-md mx-auto mb-6">
+                            We are currently collecting and verifying family submissions. Initial profiles will appear here as soon as vetting is completed.
+                        </p>
+                        <a href="https://tinyurl.com/alazwaj" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider text-emeraldDark gold-gradient-bg shadow-md hover:scale-105 transition-all">
+                            <i class="fa-solid fa-file-pen mr-2"></i>Register Your Family Profile
+                        </a>
                     </div>
                 `;
                 return;
@@ -661,6 +585,7 @@
 
         // Filtering Engine
         function applyFilters() {
+            if (!HAS_PROFILES) return;
             const gender = document.getElementById('filterGender').value;
             const city = document.getElementById('filterCity').value;
             const edu = document.getElementById('filterEducation').value;
